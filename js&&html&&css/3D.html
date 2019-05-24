@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+	<style>
+		*{margin:0;padding: 0;}
+		.aaa{
+			width: 200px;
+			height: 200px;
+			background: red;
+			animation-duration: 1s;/*动画持续时间*/
+   			animation:aaa 2s;
+			-webkit-animation:aaa 2s; /* Safari and Chrome */
+		}
+		@keyframes aaa {
+			0% {opacity: 0;}/*初始状态 透明度为0*/
+			50% {opacity: 0;}
+			100% {opacity: 1;}/*结束状态 透明度为1*/
+		}
+		.bbb{
+			width: 200px;
+			height: 200px;
+			background: #ccc;
+			animation-duration: 1s;/*动画持续时间*/
+   			animation:bbb 2.5s;
+			-webkit-animation:bbb 2.5s; /* Safari and Chrome */
+		}
+		@keyframes bbb {
+			0% {opacity: 0;}/*初始状态 透明度为0*/
+			50% {opacity: 0;}
+			100% {opacity: 1;}/*结束状态 透明度为1*/
+		}
+		.ccc{
+			width: 200px;
+			height: 200px;
+			background: green;
+			animation-duration: 1s;/*动画持续时间*/
+   			animation:ccc 3s;
+			-webkit-animation:ccc 3s; /* Safari and Chrome */
+		}
+		@keyframes ccc {
+			0% {opacity: 0;}/*初始状态 透明度为0*/
+			50% {opacity: 0;}
+			100% {opacity: 1;}/*结束状态 透明度为1*/
+		}
+		.ddd{
+			width: 200px;
+			height: 200px;
+			background: pink;
+			animation-duration: 1s;/*动画持续时间*/
+   			animation:ddd 3.5s;
+			-webkit-animation:ddd 3.5s; /* Safari and Chrome */
+		}
+		@keyframes ddd {
+			0% {opacity: 0;}/*初始状态 透明度为0*/
+			50% {opacity: 0;}
+			100% {opacity: 1;}/*结束状态 透明度为1*/
+		}
+		.eee{
+			width: 200px;
+			height: 200px;
+			background: black;
+			animation-duration: 1s;/*动画持续时间*/
+   			animation:eee 4s;
+			-webkit-animation:eee 4s; /* Safari and Chrome */
+		}
+		@keyframes eee {
+			0% {opacity: 0;}/*初始状态 透明度为0*/
+			50% {opacity: 0;}
+			100% {opacity: 1;}/*结束状态 透明度为1*/
+		}
+
+		.container{position: relative;}
+		.wrap{position: absolute;width: 200px;height: 200px;background: red;left: 50%;top: 50%;margin-top: -100px;margin-left: -100px;}
+
+		.weilei{
+			width: 200px;
+			height: 200px;
+			border:1px solid #000;
+			margin-top: 50px;
+			position: relative;
+		}
+		.weilei:after{
+			position: absolute;
+            right: 0;
+            top: 0;
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid transparent;
+            border-top: 50px solid red;
+		}
+	</style>
+</head>
+<body>
+	<div class="aaa"></div>
+	<div class="bbb"></div>
+	<div class="ccc"></div>
+	<div class="ddd"></div>
+	<div class="eee"></div>
+	<div class="weilei"></div>
+</body>
+</html>

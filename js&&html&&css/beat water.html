@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>打水</title>
+</head>
+<style>
+	.wrapper{
+		 display: grid;
+		 grid-template-columns: repeat(3,1fr);
+		 grid-gap: 10px;
+		 grid-auto-rows: minmax(200px, auto);
+	}
+	.one{
+		grid-column: 1 ;
+  		grid-row: 1;
+	}
+	.two{
+		grid-column: 2 ;
+  		grid-row: 1 ;
+	}
+	.three {
+	  grid-row: 1;
+	  grid-column: 3;
+	}
+	.four{
+		grid-column: 1 ;
+  		grid-row: 2 ;
+	}
+	.five{
+		grid-column: 2 ;
+  		grid-row: 2 ;
+	}
+	.six{
+		grid-column: 3 ;
+  		grid-row: 2 ;
+	}
+	.seven{
+		grid-column: 1/4;
+  		grid-row: 3/4;
+  		background: pink;
+  		border: 1px solid red;
+	}		
+	
+</style>
+<body>
+	<div class="wrapper">
+	  <div class="one">One</div>
+	  <div class="two">Two</div>
+	  <div class="three">Three</div>
+	  <div class="four">Four</div>
+	  <div class="five">Five</div>
+	  <div class="six">Six</div>
+	  <div class="seven">Seven</div>
+	</div>
+	<script>
+		
+	</script>
+</body>
+</html>

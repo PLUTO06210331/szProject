@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+	<style>
+		.img{margin:20px 0 0 20px;position: relative;width: 455px;height: 240px;}
+		.jianbian,.jianbian1,.jianbian2,.jianbian3{width: 0px;height: 0px;background: #ecb72a;transition: .5s}
+		.jianbian1{position: absolute;top: 0px;}
+		.jianbian3,.jianbian2{position: absolute;bottom: -5px;right: 0px;}
+
+		.img:hover .jianbian{width: 455px;height: 2px;}
+		.img:hover .jianbian1{width: 2px;height: 245px;}
+		.img:hover .jianbian2{width: 455px;height: 2px;}
+		.img:hover .jianbian3{width: 2px;height: 245px;}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div class="img">
+			<div class="jianbian"></div>
+			<div class="jianbian1"></div>
+			<div class="jianbian2"></div>
+			<div class="jianbian3"></div>
+			<div class="images">
+				<img src="img/fendi.jpg" alt="fendi">
+			</div>
+		</div>
+		<div class="img">
+			<div class="jianbian"></div>
+			<div class="jianbian1"></div>
+			<div class="jianbian2"></div>
+			<div class="jianbian3"></div>
+			<img src="img/fendi.jpg" alt="fendi">
+		</div>
+	</div>
+
+	<div id="full" style="margin-top:20px;width: 500px;height: 500px;background: green;display: flex;">
+		<div id="in" style="width: 200px;height: 200px;background: red;align-self: center;margin: auto;"></div>
+	</div>
+</body>
+</html>

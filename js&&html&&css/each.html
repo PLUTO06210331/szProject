@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+	<style>
+		*{margin:0;padding: 0;}
+		.bigimg{width: 30vw;height:30vh;}
+		.bigimg img{width: 200px;height: 200px;}
+		.lay{list-style: none;display: flex;}
+		li{margin-right: 40px;}
+	</style>
+</head>
+<body>
+	<div class="bigimg"><img src="img/11.png"></div>
+	<div class="smallimg">
+		<ul class="lay">
+			<li class="on"><img src="img/11.png"></li>
+			<li><img src="img/22.png"></li>
+			<li><img src="img/33.png"></li>
+			<li><img src="img/44.png"></li>
+			<li><img src="img/55.png"></li>
+			<li><img src="img/66.png"></li>
+		</ul>
+	</div>
+	<script src="jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+		var oLi = $(".lay li");
+		var oImg = $(".bigimg img");
+		oLi.each(function(){
+			$(this).click(function(){
+				var hh = $(this).children("img").attr("src");
+				oImg.attr("src",hh);
+			});
+		});
+	</script>
+</body>
+</html>

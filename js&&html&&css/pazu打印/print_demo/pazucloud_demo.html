@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PAZUCloud -- WEB打印控件云版本DEMO</title>
+
+    <script type="text/javascript">
+
+        //用跨域引入js的方式不支持https协议,此时应该使用websocket
+        //if (!!window.WebSocket && window.WebSocket.prototype.send) {
+             //支持websocket，在pazuclient中对应使用 websocket通信
+        //} else {
+            //浏览器不支持WebSocket，强制转到http协议的地址
+            var urlA=window.location.href.split(':');
+            if (urlA[0].toLowerCase() == 'https') {
+                urlA[0] = 'http';
+                window.location.href = urlA.join(":");
+            } 
+        //}
+
+        // if(!window.PAZU_Config) {
+        //     window.PAZU_Config = {
+        //         prot: "http",
+        //         server: 'localhost.pazu.4fang',
+        //         port: 6894,
+        //         license: '' //PAZU授权许可码，非商业应用或者测试可以免费申请
+        //     }
+        // }
+
+        //定义PAZU加载成功的事件处理机制
+        window.onPAZUReady = function () {
+            alert("PAZU 已经加载成功了，点击确定隐藏div_PAZU_Tips")
+            document.getElementById("div_PAZU_Tips").style.display = 'none';
+
+            //试试加载打印机名称列表回来看看
+            PAZU.TPrinter.getPrinters(function (ps) {
+                //获得是一个以回车换行分隔的字符串 
+                var pa = ps.split("\r\n");
+                for (var i = 0; i < pa.length; i++) {
+                    var op = document.createElement("option");
+                    op.text = pa[i];
+                    document.getElementById("SelPrinters").appendChild(op);
+                }
+                getPapers();
+            });
+
+        }
+
+        function getPapers(sDefPaper) {
+            if (!sDefPaper) sDefPaper = "A4";
+            var Prt=document.getElementById("SelPrinters");
+            var pname;
+            try { pname = Prt.options[Prt.selectedIndex].text; } catch (ex) { /*打印机列表可能为空*/}
+            if (!pname || pname == '') return;
+            PAZU.TPrinter.getPaperForms(pname, function (pp) {
+                var ElmPP = document.getElementById("SelPapers");
+                var selIdx = 0;
+                try { ElmPP.options.length = 0; } catch (ex) { ElmPP.innerHTML = ""; }//alert("options.length = 0 :删除下拉框所有选项语句出错，浏览器dom兼容问题，请自行解决")
+                if (pp && pp != '') {
+                    var pa = pp.split("\r\n");
+                    pa.sort();
+                    for (var i = 0; i < pa.length; i++) {
+                        var op = document.createElement("option");
+                        op.text = pa[i];
+                        if (pa[i] == sDefPaper) selIdx = i;
+                        ElmPP.appendChild(op);
+                    }
+                } else {
+                    alert("获取打印机[" + pname + "]的纸张大小列表失败");
+                    var op = document.createElement("option");
+                    op.text ="A4";
+                    ElmPP.appendChild(op);
+                }
+                ElmPP.selectedIndex = selIdx;
+            });
+        }
+        
+        var isPreviewOnly = true;
+
+        function createPaperForm() {
+            var w = parseInt(document.getElementById("PaperW").value);//毫米
+            var h = parseInt(document.getElementById("PaperH").value) ;
+            var printer = '';
+            var Prt = document.getElementById("SelPrinters");
+            try { printer = Prt.options[Prt.selectedIndex].text; } catch (ex) { /*打印机列表可能为空*/ }
+            PAZU.TPrinter.createPaper(w, h, function (paper) {
+                alert('成功创建纸张格式：' + paper);
+                getPapers(paper);
+            },printer); 
+
+        }
+
+        function doPagesetup() {
+
+            // PAZU.TPrinter.marginTop=parseInt(document.getElementById("mtop").value);
+            // PAZU.TPrinter.marginBottom=parseInt(document.getElementById("mbottom").value);
+            // PAZU.TPrinter.marginLeft=parseInt(document.getElementById("mleft").value); 
+            // PAZU.TPrinter.marginRight=parseInt(document.getElementById("mright").value); 
+            
+            // PAZU.TPrinter.footer=document.getElementById("footer").value;
+            // PAZU.TPrinter.header=document.getElementById("header").value;
+            
+            // PAZU.TPrinter.fontCSS = document.getElementById("hfcss").value;
+            
+            // PAZU.TPrinter.orientation = document.getElementById("ori_1").checked?1:2;                     //属性纸张方向  数据类型：整数1或者2 ， 1=纵向  2=横向 
+         
+            PAZU.TPrinter.paperName=document.getElementById("SelPapers").value;                   //属性   纸张大小名称  数据类型：字符串 
+            PAZU.TPrinter.printerName=document.getElementById("SelPrinters").value;                  //属性   打印机名称    数据类型：字符串 
+        
+            
+            // PAZU.TPrinter.isZoomOutToFit = document.getElementById("isZoomOutToFit").checked;            //属性   是否缩放以适应大小打印 数据类型：Boolean true / false 
+
+/*
+            PAZU.TPrinter.printTemplate=""; //属性   打印模板的URL -- （本属性 非高手莫用 ^_^） 云版本不支持
+            if(document.getElementById("chkPrintTemplate").checked){
+                document.getElementById("nopreview").checked=false;
+                isPreviewOnly=true;
+                var prot=(window.location.href.split(':'))[0].toLowerCase();
+                if(prot!="http"&&prot!="https")prot="https";
+                PAZU.TPrinter.printTemplate=prot+"://www.4fang.net/!HTML/OLD/tech/pt.htm";   
+                //alert(PAZU.TPrinter.printTemplate);            
+            }
+ */            
+            PAZU.TPrinter.copies = parseInt(document.getElementById("copies").value);                            //属性   打印份数 数据类型：整数，默认为1 
+            PAZU.TPrinter.range = document.getElementById("range").value;                          //属性   页面范围 数据类型：字符串 
+            PAZU.TPrinter.isCopyByCopy = document.getElementById("isCopyByCopy").checked;                   //属性    是否整份打印结束后再打印下一份   数据类型：Boolean  true / false 
+            
+            //PAZU.TPrinter.onlyPrintElementID="";       
+            PAZU.TPrinter.isPrintBackground = document.getElementById("isPrintBackground").checked;
+        }
+
+        //1.打印整个页面
+        function print_1() {
+            console.log('sss');
+            doPagesetup();
+            PAZU.print(null,null,null,isPreviewOnly);
+        }
+
+        //2.打印指定DIV内的内容（红色虚框内）
+        function print_2() {
+            doPagesetup();
+            var s = document.getElementById("div_PrintData").innerHTML;
+            PAZU.print(s, null, null, isPreviewOnly);
+        }
+
+        //3.打印指定DIV（红色虚框部分，含DIV本身）
+        function print_3() {
+            doPagesetup();
+            PAZU.print("div_PrintData", null, null, isPreviewOnly);
+            //也相当于:
+            //PAZU.TPrinter.onlyPrintElementID = "div_PrintData";
+            //PAZU.print(null, null, null, isPreviewOnly);
+        }
+
+
+        //进阶应用: aryJsRef, aryCssRef参数
+        //PAZU.print(xContent, aryJsRef, aryCssRef, bPreview,bPromptUser，callBack);
+
+        //4.纯CSS注入，改变打印内容的字体样式(增加删除线)
+        function print_4() {
+            doPagesetup();
+            //“css/pazu_hack.css” 的内容： #div_PrintData span{ text-decoration:line-through}
+            PAZU.print("div_PrintData", null, ["css/pazu_hack.css"], isPreviewOnly);
+        }
+        
+        //5.JS注入，对JSON内容进行处理打印
+        function print_5() {
+            doPagesetup();
+            var o = {
+                key: "theKey",
+                content:"this is from JSON object"
+            }
+            //“js/pazu_hack.js” 的内容请下载它的源码查看,注意里面的window.onbeforepazuprint(data,callback)的实现
+            PAZU.print(JSON.stringify(o), ["js/json2.js","js/pazu_hack.js"], null, isPreviewOnly);
+        }
+
+        //6.同时注入JS和CSS
+        function print_6() {
+            doPagesetup();
+            var o = {
+                key: "theKey",
+                content: "this is from JSON object"
+            }
+            PAZU.print(JSON.stringify(o), ["js/json2.js", "js/pazu_hack.js"], ["css/pazu_hack.css"], isPreviewOnly);
+        }
+
+        //7.HTML5 canvas 内容打印
+        function print_7() {
+            doPagesetup();
+            var o = {
+                key: "theKey",
+                content: "this is from JSON object",
+                isH5Test:true
+            }
+            PAZU.print(JSON.stringify(o), ["js/json2.js", "js/pazu_hack.js"], ["css/pazu_hack.css"], isPreviewOnly);
+        }
+        function print_8() {
+            var f="D:\\test.doc";  //也可以改成http或https协议或file协议
+            alert("请确保文件 "+f+" 存在，本DEMO才能进行。\r\n\r\n本功能为新加的，如有改进建议请入Q群616840081。谢谢")
+            PAZU.print({ file: f }, null, null, false);
+        }
+        function print_9(){
+            var Prt=document.getElementById("SelPrinters");
+            PAZU.TPrinter.setDefaultPrinter(Prt,function(){
+
+            });
+        }
+        function print_10(){
+            PAZU.TPrinter.getPrinters2(function(a){
+                //a为打印机列表数组
+                //alert(JSON.stringify(a));
+                PAZU.TPrinter.getPrinterStatus(a,function(A){
+                //获得是一个对象数组
+                alert(JSON.stringify(A).split(",{").join(",\r\n{"));
+            });
+            })
+            
+        }
+    </script>
+
+    <!--pazuclient.js要放到PAZU_Config定义的后面-->
+    <script type="text/javascript" charset="utf-8" src="js/pazuclient.js"></script>
+    
+</head>
+ 
+<body>
+<!--这个div_PAZU_Tips 用于给用户检测PAZU是否成功加载的提示，你可以按文档用自己的方式检测PAZU加载-->  
+<div id="div_PAZU_Tips" style="color:red;background-color:yellow;padding:10px;border:1px solid red;">
+    *没有检测到PAZU云打印(位于localhost)，请<a href="/4ff/PAZUCloud_Setup.exe">下载安装并刷新本页</a>
+    <br/>
+    安装程序会修改 hosts 文件（把 localhost.pazu.4fang 指向 127.0.0.1），请务必让杀毒允许此操作。
+</div>	
+<div id="div_PrintData" style="border:2px dashed red;padding:10px;width:600px">
+    <div>
+         <span style="font-size:40px;font-weight:bold">PAZU云版本</span><p></p><span  style="font-size:20px;font-weight:bold">迄今为止最好的web打印中间件</span>
+<div class="p__" style="border:1px solid yellow;margin-top:10px;background-color:yellow">黄色这个div只显示不打印(class="p__")</div>
+    </div>
+</div>
+    <table>
+      <tr>
+          <td style="border:0;padding:10px;vertical-align:top">
+              打印服务器上的打印机：<select id="SelPrinters"  onchange="getPapers();"></select><p></p>   
+&nbsp;&nbsp;&nbsp;&nbsp;该打印机支持的纸张：<select id="SelPapers"><option>A4</option></select>
+<p></p>
+<br />
+<br />
+页眉 <input id="header" type="text" style="width: 240px" /><br/>
+页脚 <input id="footer" type="text" style="width: 240px" value="这是页大脚:)" /><br />
+页面页脚的CSS控制样式<input id="hfcss" type="text" style="width: 236px" value="font-size:12px;" />
+<br />
+方向
+	<input id="ori_1" name="ori" type="radio" checked="checked" />纵向&nbsp;
+	<input id="ori_2" name="ori" type="radio" />横向(需打印机支持)&nbsp;&nbsp;&nbsp;&nbsp;
+<br/>页边距: 上 <input id="mtop" type="text" style="width: 46px" value="15" />&nbsp; 下 
+<input id="mbottom" type="text" style="width: 46px" value="10" />&nbsp; 左 
+<input id="mleft" type="text" style="width: 46px" value="15" />&nbsp; 右 
+<input id="mright" type="text" style="width: 46px" value="10" />&nbsp; （单位mm）<br />
+<br />
+	<input id="isZoomOutToFit" type="checkbox" />是否缩放以适应大小打印&nbsp;&nbsp;
+	<input id="isCopyByCopy" type="checkbox" />是否整份打印结束后再打印下一份<br />
+<br />
+打印份数 <input id="copies" type="text" style="width: 46px" value="1" /><br/> 页码范围(如:1-5或者1,3,5等，默认为打印全部页) <input id="range" type="text" style="width: 46px" value="" />&nbsp; 
+<br />
+<br />
+	自定义纸张：宽<input id="PaperW" type="text" style="width: 46px" value="180" />mm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 高<input id="PaperH" type="text" style="width: 46px" value="200" />mm<input name="BTNCreatePaper" type="button" value="设置纸张" onclick="createPaperForm();" style="width: 100px" /><br />
+<br />
+              <input id="isPrintBackground" type="checkbox" checked="checked" />是否打印背景<br/>
+    <input id="nopreview" type="checkbox" onclick="isPreviewOnly=!this.checked" />不预览立即打印&nbsp;&nbsp;<br/>
+  <!--  <input id="chkPrintTemplate" type="checkbox"/>试试微软的PrintTemplate技术(预览下才有效)-->
+<!--
+	<input name="PT" onclick="if (PT.checked == true) nopreview.checked = false;" type="checkbox" />试试Print Template 技术(preview only)<br />
+<br/>
+	<input name="isfrm" type="checkbox"/>指定只打印下面这个IFrame(不预览立即打印) 
+	<input onclick="if (chkOnlyPrintIFrame.checked == true) chkOnlyPrintDiv.checked = false;" name="chkOnlyPrintIFrame" type="checkbox"/><span style="color:red">用onlyPrintElementID属性只打印（预览）Iframe内容</span>
+<br />
+</div>
+<div style="position:absolute;left:550px;top:150px;width:132px;height:135px;background:url(printer.jpg);"><br/><input name="isPrintBackground" type="checkbox" />是否打印背景</div> 
+<br />
+-->
+    <!--
+<div style="font-size:36px; border:5px red solid; padding:10px;margin:5px" id="divOP">
+<input onclick="if (chkOnlyPrintDiv.checked == true) chkOnlyPrintIFrame.checked = false;" type="checkbox" name="chkOnlyPrintDiv"/>使用onlyPrintElementID属性可以只打印预览本DIV
+</div> 
+    -->
+<!-- //设置某些页面元素不打印，只要在该元素的样式类class里面添加一个p__就可以了,看myDIV的class-->
+<!--
+<div class="myDIVClasss p__" id="myDIV">这个DIV和"打印试试"按钮都不会被打印</div>
+	<input class="p__" name="Button1" type="button" value="打印试试！" onclick="demo();" style="width: 301px" />
+	
+<br/><span style="color:red">*注：onlyPrintElementID是2012-1-2后增加的新属性，需要下载安装最新的PAZU</span>	
+    -->
+
+          </td>
+          <td style="border:0;border-left:1px solid gray;padding:10px;vertical-align:top">
+              <button onclick="print_1();" style="width:400px;">1.打印整个页面</button>
+              <p></p>
+              <button onclick="print_2();" style="width:400px;">2.打印指定DIV内的内容（红色虚框内）</button>
+               <p></p>
+              <button onclick="print_3();" style="width:400px;">3.打印指定DIV（红色虚框部分，含DIV本身）</button>
+               <p></p>
+              以下为进阶应用示例（CSS和JS注入）：
+              <p></p>
+               <button onclick="print_4();" style="width:400px;">4.纯CSS注入，改变打印内容的字体样式(增加删除线)</button>
+              <p></p>
+               <button onclick="print_5();" style="width:400px;">5.JS注入，对JSON内容进行处理打印</button>
+              <p></p>
+               <button onclick="print_6();" style="width:400px;">6.同时注入JS和CSS</button>
+              <p></p>
+               <button onclick="print_7();" style="width:400px;">7.HTML5 canvas 内容打印</button>
+               <p></p>
+               <button onclick="print_8();" style="width:400px;">8.打印pdf或者office文件</button>
+               <!--<p></p>
+               <button onclick="print_9();" style="width:400px;">9.setDefaultPrinter</button>
+               -->
+               <p></p>
+               新增功能:
+               <p></p>
+               <button onclick="print_10();" style="width:400px;">10.获取打印机状态</button>
+          </td>
+      </tr>
+    </table>
+</body>
+</html>
+
+
+

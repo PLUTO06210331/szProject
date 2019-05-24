@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jsx</title>
+	<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+	<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/babel">
+		var i = 1;
+		var styleName = {
+			fontSize: 100,
+			color: 'red'
+		}
+		var content = '<strong>Content</strong>'
+		const element = <div>
+							<h1 style={styleName} className="foo">Hello, world</h1>
+							<p>{1+1}</p>
+							<div>{i == 1?'Trur':'false'}</div>
+							<div dangerouslySetInnerHTML={{__html: content}}></div>
+						</div>;
+		ReactDOM.render(element, document.getElementById('root'));
+	</script>
+</body>
+</html>

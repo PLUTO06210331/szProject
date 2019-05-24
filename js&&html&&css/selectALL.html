@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+</head>
+
+<body>
+	<button id="but">全选</button>
+	<button id="but1">全不选</button>
+	<button id="but2">反选</button><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	<input type="checkbox"><br>
+	
+	<script>
+	var b = document.getElementById("but");
+	var k = document.getElementById("but1");
+	var a = document.getElementById("but2");
+	var c = document.getElementsByTagName("input");
+	b.onclick = function(){
+		for(var i = 0;i<c.length;i++){
+		c[i].checked=true;
+		};
+	};
+	k.onclick = function(){
+		for(var i = 0;i<c.length;i++){
+		c[i].checked=false;
+		};
+	};
+	a.onclick = function(){
+		for(var i = 0;i<c.length;i++){
+			if(c[i].checked==true){
+				c[i].checked=false;
+			}else{
+				c[i].checked=true;
+			}
+		};
+	};
+
+
+	let obj={}
+    function getcss(el,...arrs){
+        for(var key in arrs){
+            obj=arrs[key]
+            console.log(obj)
+        }
+        for(var item in obj){
+           el.style[item]=obj[item]
+       }
+    }
+    var app=document.getElementById('app')
+    getcss(app,{'color':'red','font-size':'23px',
+        'display': 'inline-block',
+        'color':'blue',
+        'font-weight':900,
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

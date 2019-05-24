@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6</title>
+</head>
+<body>
+	<script>
+		/*class Point {
+			constructor(x, y){
+				this.x = x;
+				this.y = y;
+			}
+
+			toString() {
+				return '('+ this.x +','+ this.y +')'
+			}
+		}
+		
+		class Bar {
+			doStuff() {
+				console.log('stuff');
+			}
+		}
+		var b = new Bar()
+		console.log(b.doStuff());*/
+
+		/*class Animal {
+			constructor(name) {
+				this.name = name;
+			}
+			speck() {
+				console.log(this.name + ' makes a noise ')
+			}
+		}
+
+		class Dog extends Animal {
+			speak(){
+				console.log(this.name + ' barks.');
+			}
+		}
+
+		var d = new Dog('Mitzie');
+		console.log(d.speak())*/
+
+		// var obj = new Proxy({}, {
+		//   get: function (target, key, receiver) {
+		//     console.log(`getting ${key}!`);
+		//     return Reflect.get(target, key, receiver);
+		//   },
+		//   set: function (target, key, value, receiver) {
+		//     console.log(`setting ${key}!`);
+		//     return Reflect.set(target, key, value, receiver);
+		//   }
+		// });
+
+		// var text = (function(a){
+		// 	this.a = a;
+		// 	return function(b){
+		// 		return this.a + b;
+		// 	}
+		// }(function(a,b){
+		// 	return a
+		// }(1,2)))
+		
+		// console.log(text(4))
+
+		function thousands(num){
+		    return num.toLocaleString();
+		}
+
+		var arr = [1,11,1,2,33,3,3,3,4,5,6,7,8,8];
+		var arr1 = new Set(arr);    //set去重
+		console.log(arr1);
+
+	</script>
+</body>
+</html>

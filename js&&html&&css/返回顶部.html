@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		moveScroll = (iTarget, time) => {
+         var start = document.getElementById('content').scrollTop;  //滚动的容器
+         var dis =  iTarget - start;
+         var count = Math.round( time / 30 );
+         var num = 0; 
+         var timer = null;
+        timer = setInterval(function() {   //动画
+            num += 1;
+            // 匀减速
+            var a = 1 - num / count;
+            var cur = start + dis*( 1 - Math.pow(a,3));
+            document.getElementById('content').scrollTop = cur; 
+            if( num == count ){
+                clearInterval(timer);
+            }
+ 
+        }, 30)
+    }
+
+	    backTop = () => {
+	        this.moveScroll(0,500)
+	    }
+
+	</script>
+</body>
+</html>

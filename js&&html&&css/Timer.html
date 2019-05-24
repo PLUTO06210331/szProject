@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//转时间戳
+		var time1 = Date.parse(new Date());
+		//时间戳转时间
+		function timeChange(time1){
+		    var date = new Date(time1);//如果time1为10位不需要乘1000
+		    var Y = date.getFullYear() + '-';
+		    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+		    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+		    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+		    var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+		    return Y+M+D+h+m+s;
+		}
+
+
+			var a = 'http://p0.meituan.net/w.h/movie/034069fc367db8a7d9644717b416cc2c332883.jpg'
+			var b = 'http://p0.meituan.net/w.h/movie/034069fc367db8a7d9644717b416cc2c332883.jpg'
+			var one = a.substring(0,22);
+			var two = b.substring(26,a.length);
+			console.log(one + two);
+
+	</script>
+</body>
+</html>

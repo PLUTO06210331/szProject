@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+	<style>
+		*{margin:0;padding: 0;}
+		/* li{display: inline-block;width: 50px;height: 25px;text-align: center;line-height: 25px;border-radius: 20px;cursor: pointer;}
+		.on{background: blue;color: #fff;} */
+		#div{
+				width: 700px;
+				height: 500px;
+				border: 2px solid black;
+				margin-left: 150px;
+			}
+		.calc{
+			width: calc(100% - 50px);
+			height: 50px;
+			background: #eee;
+			margin: auto;
+		}
+		li{display: inline-block;width: 80px;height: 40px;color: #fff;background: blue;cursor: pointer;}
+	</style>
+</head>
+<body>
+	<div id="node">我是一个DIV</div>
+	<div id="div">我也是div</div>
+	<div class="calc"></div>
+	<input id="searchinput">
+	<div>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+
+
+
+	<form id="form">
+		姓名：<input type="text" id="name" name="name">
+		年龄：<input type="text" id="age" name="age">
+		职业：<input type="text" id="obj" name="obj">
+		提交：<input type="submit" id="submit">
+	</form>
+
+	<div>
+		<span id='hour'>0</span>:
+		<span id='minute'>0</span>
+	</div>
+	
+	<input type="text" id="fangdou">
+
+
+	<script type="text/javascript" src="jquery/jquery-1.11.1.min.js"></script>
+	<script>
+	
+	
+	
+
+	//转时间戳
+		/*var time1 = Date.parse(new Date());
+		console.log(time1);*/
+		//时间戳转时间
+		/*function timeChange(time1){
+		    var date = new Date(time1);//如果time1为10位不需要乘1000
+		    var Y = date.getFullYear() + '-';
+		    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+		    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+		    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+		    var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+		    return Y+M+D+h+m+s;
+		}
+		console.log(timeChange(time1));*/
+
+		/*//生成5-32随机数
+	function random(m,n){
+		var c = m - n + 1;
+		return Math.ceil(Math.random()*c + n)
+	}
+	console.log(random(100,5))*/
+	
+	/*var d = new Date()
+	var k = d.setMonth(d.getMonth()+1);
+	alert(d.toLocaleString());
+*/
+	// window.onload = function(){
+	// 	var xx = document.getElementsByTagName("li")
+	// 	for(var i = 0;i<xx.length;i++){
+	// 		xx[i].index = i;
+	// 		xx[i].onclick = function(){
+	// 			for(var j=0;j<xx.length;j++){
+	// 				xx[j].className = "";
+	// 				xx[this.index].className = "on";
+	// 			}
+				
+	// 		}
+	// 	}
+
+	// 	var object = {
+	// 		name:"song",
+	// 		age:23
+	// 	}
+	// 	if(object.hasOwnProperty("name")){
+	// 		alert("Hello song");
+	// 	}
+
+	// 	function object(name,age){
+	// 		alert(name+"今年"+age+"岁了");
+	// 	}
+	// 	object("song",23);
+	// }	
+
+
+
+	//正则表达式
+		//g:全局搜索
+
+		//i:表示不区分大小写
+
+		//m:表示多行显示	
+
+	// var text = "000-0000-000";
+	// var pattern = /\d{3}-\d{4}-\d{3}/;
+	// if(pattern.test(text)){
+	// 	alert("这尼玛是正则吧");
+	// }
+
+	// function aaa(){
+	// 	var a = 1;
+	// 	alert(a);
+	// }
+	// aaa();
+
+		/*function creatPerson(nama,age,job){
+			var o = new Object();
+			o.name = name;
+			o.age = age;
+			o.job = job;
+			o.sayName = function(){
+				alert("this.name");
+			}
+			return o;
+		}
+		var person1 = creatPerson("Nicholas",29,"Software");
+		var person2 = creatPerson("Qreg",30,"Doctor")
+		console.log(person1);
+		console.log(person2);*/
+
+		/*function creatPerson(nama,age,job){
+			this.name = name;
+			this.age = age;
+			this.job = job;
+			this.sayName = sayName;
+		}
+		function sayName(){
+			alert(this.name);
+		}
+		var person1 = creatPerson("Nicholas",29,"Software");
+		var person2 = creatPerson("Qreg",30,"Doctor")
+		console.log(person1);
+		console.log(person2);*/
+
+		/*var fabtorial = (function f(num){
+			if(num <= 1){
+				return 1;
+			}else{
+				return num*f(num-1);
+			}
+		});
+		console.log(fabtorial(100));*/
+
+		/*function map(f,a){
+			var result = [];
+			var i;
+			for(i = 0;i != a.length;i++){
+				result[i] = f(a[i]);
+				return result;
+			}
+		}
+		var f = function(x){
+			return x * x * x;
+		}
+		var numbers = [0,1,2,5,10];
+		var cube = map(f,numbers);
+		console.log(cube);*/
+
+		/*var creatPet = function(name){
+			var sex;
+			return {
+				setName: function(newName){
+					name = newName;
+				},
+			}
+
+			getName: function(){
+				return name;
+			}
+
+			getSex: function(){
+				return sex;
+			}
+
+			setSex: function(newSex){
+				if(typeof newSex == "string"&& (newSex.toLowerCase() == "male" || newSex.toLowerCase() == "female")){
+					sex = newSex;
+				}
+			}
+		}
+		var pet = creatPet("Vivie");
+		pet.getName();
+		pet.setName("Oliver");
+		pet.setSex("male");
+		pet.getSex();              
+		pet.getName();  */
+		
+		/*function person(name,age,job){
+			this.name = name;
+			this.age = age;
+			this.job = job;
+			this.sayName = function(){
+				 console.log(this.name);
+			}
+		}
+		var person1 = new person("Nike",19,"IT");
+		person1.sayName();*/
+
+		/*function number(one,two){
+			this.one = one;
+			this.two = two;
+		}
+		function text(a,b){
+			return a+b;
+			number.call(this,a,b);
+		}
+		var k = text(1,2);
+		console.log(k);*/
+
+		/*function creatFunctions(){
+			var result = [];
+			for(var i = 0;i < 10;i++){
+				result[i] = function(num){ 
+					return function(){
+						return num;
+					}
+				}(i);
+			}
+			return result;
+		}*/
+
+		/*function fn(){
+			var max = 10;
+			return function bar(x){
+				if(x > max){
+					console.log(x);
+				}
+			}
+		}
+		var f1 = fn();
+		f1(15);*/
+
+		//二维数组	
+		/*function theArr(arr,n){
+			var arr1 = [];
+			for(var i = 0;i < arr.length;i+=n){
+				arr1.push(arr.slice(i,i+n));
+			}
+			//return arr1;
+			console.log(arr1);
+		}
+		theArr([1,2,3,4,5],2);*/
+
+		/*function random(){
+			var arr1 = [];
+			for(var i = 0;i<arr.length;i++){
+				var n = Math.round(Math.random()*32)
+				n.push(arr1);
+			}
+			console.log(arr1);
+		}
+		random([]);*/
+
+		/*var node = document.getElementById("node");
+		var newNode = document.createElement("p");
+		var txt = document.createTextNode('hello world');
+		newNode.appendChild(txt);
+		node.appendChild(newNode);
+
+
+		var key = {
+			name:"javascript",
+			age:23,
+			job:"web"
+		}
+
+		var value =	JSON.parse(JSON.stringify(key));
+		console.log(value);*/
+
+		/*var div = document.getElementById("div");
+		div.onmousedown = function(e){
+			e = e || event
+			console.log(e.clientX+"--"+e.clientY);
+			console.log(e.pageX+"--"+e.pageY);
+			console.log(div.offsetLeft+"--"+div.offsetTop);
+		}*/
+
+/*
+		var x = [1,2,3,4,5,5,4,3,2,1];
+		console.log(x.indexOf(1,5)); //查找元素1 从位置5开始
+		console.log(x.lastIndexOf(2));*/
+
+		//冒泡排序
+		/*function bubbleSort(arr){
+			for(var i = 0;i<arr.length;i++){
+				for(var j = i+1; j<arr.length+1;j++){
+					if(arr[i] > arr[j]){
+						var temp = arr[j];
+						arr[j] = arr[i];
+						arr[i] = temp;
+
+					}	
+				}
+			}
+			console.log(arr);
+
+		}
+		bubbleSort([12,10,5,3,2,0]);	*/
+		var age = 23;
+		var obj = {
+			name:"songzhen",
+			age:22,
+			school:"皇冠中学",
+			fun: function(){
+				// alert(JSON.stringify(this))
+				var that = this
+				return function(){
+					return that.age
+				} 
+			}
+		}
+		// alert(obj.fun()())
+
+
+		// var fn = obj.fun
+		// fn();
+		/*console.log(a);
+		var data = JSON.parse(JSON.stringify(a));  //拷贝
+		console.log(data);
+		a.name = "songxiaozhen";
+		console.log(a);*/
+
+		//promise
+		// function callback(){
+		// 	console.log('Done');
+		// }
+		// console.log('before setTimeout()');
+		// setTimeout(callback,1000);
+		// console.log('after setTimeout()');
+
+		// function test(resolve, reject){
+		// 	var timeOut = Math.random()*2;
+		// 	console.log('set timeout to:' + timeOut + 'seconds.');
+		// 	setTimeout(function(){
+		// 		if(timeOut < 1){
+		// 			console.log('call resolve()...');
+		// 			resolve('200 OK');
+		// 		}else{
+		// 			console.log('call reject()...');
+		// 			reject('timeout in'+ timeOut + 'seconds')
+		// 		}
+		// 	},timeOut * 1000);
+		// }
+
+		// new Promise(test).then(function(result){
+		// 	console.log('成功:' + result);
+		// }).catch(function(reason){
+		// 	console.log('失败:' + reason);
+		// })
+
+
+		//for循环闭包
+
+		// var uli = document.getElementsByTagName("li");
+		// for(var i = 0;i<uli.length;i++){
+		// 	uli[i].onclick = function(num){
+		// 		return function(){
+		// 			console.log(num);
+		// 		}
+
+		// 	}(i)
+		// }
+		
+
+		// for(var i = 0;i<5;i++){
+		// 	(function(i){
+		// 		setTimeout(function(){
+		// 			console.log(i)
+		// 	},100)})(i)
+		// }
+
+		// function getPara(name){
+		// 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		// 	var r = location.search.substr(1).match(reg);
+		// 	return r == null ? "" : unescape(r[2]);
+		// }
+		// getPara('userName');
+
+       
+       // var obj = {
+       // 	name: 'songzhen',
+       // 	age: 16
+       // }
+       // obj.prototype.key = 'this is my name'
+       // console.log(obj);
+
+   
+	   
+	   // function throttle(method,context){
+	   // 	clearTimeout(method.tid);
+	   // 	method.tid=setTimeout(function(){
+	   // 		method.call(context)
+	   // 	},300)
+	   // }
+
+	   // window.onscroll = function(){
+	   // 	throttle(scrollFn);
+	   // }
+	   //节流
+// 	   function throttle(method,delay,duration){
+// 		    var timer=null;
+// 		    var begin=new Date();    
+// 		    return function(){                
+// 		        var context=this, args=arguments;
+// 		        var current=new Date();        
+// 		        clearTimeout(timer);
+// 		        if(current-begin>=duration){
+// 		            method.apply(context,args);
+// 		            begin=current;
+// 		        }else{
+// 		            timer=setTimeout(function(){
+// 		                method.apply(context,args);
+// 		            },delay);
+// 		        }
+// 		    }
+// 		}
+// window.onscroll=throttle(scrollFn,100,500)
+
+// let a = {
+//   i: 1,
+//   toString () {
+//     return a.i++
+//   }
+// }
+
+// var a = {
+// 	num: 1
+// 	toString () {
+// 		return a.num++
+// 	}
+// }
+
+// if(a == 1 && a == 2 && a == 3) {
+//   console.log('Hello World!');
+// }
+
+// class Point {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
+
+//   toString() {
+//     return '(' + this.x + ', ' + this.y + ')';
+//   }
+// }
+// console.log(new Point(1,2).x)
+
+
+// var proxy = new Proxy({},{
+// 	get: function(target, property) {
+// 		return property in target?target[property] : 35;
+// 	}
+// });
+// proxy.a = 1
+
+// alert(proxy.a);
+
+// var handler = {
+// 	get: function(target, name){
+// 		if(name == 'prototype'){
+// 			return Object.prototype;
+// 		}
+// 		return 'Hello,' + name
+// 	},
+// 	apply: function(target,thisBinding, args){
+// 		return args[0]
+// 	},
+// 	construct: function(target, args){
+// 		return {value: args[1]};
+// 	}
+// };
+
+// var fproxy = new Proxy(function(x, y){
+// 	return x + y;
+// },handler);
+
+
+// var time = {
+// 	a: 1,
+// 	b: 2,
+// 	c: 3
+// }
+// function getColor(){
+// 	this.color = 'red'
+// }
+// getColor.property = time;
+
+// var obj = new getColor(); //继承的属性不显示 所以只会显示color
+
+// for(var prop in obj){
+// 	if(obj.hasOwnProperty(prop)){
+// 		console.log(`obj.${prop} = ${obj[prop]}`)
+// 	}
+// }
+
+
+// var a = {
+// 	name: 'songzhen',
+// 	age: 16
+// }
+
+// var b = JSON.parse(JSON.stringify(a))
+
+// function people(name,age){
+// 	this.name = name;
+// 	this.age = age;
+// }
+// people.prototype.sayName = function(){
+// 	return '我的名字是：' + this.name
+// }
+
+// console.log(people.prototype);
+
+// var p = new people('songzhen',24);
+
+// console.log(typeof(p))
+
+
+// 	sayHello();
+// 	function sayHello(){
+// 	    var message = getMessage();
+// 	    console.log(message);
+// 	}
+// 	function getMessage(){
+// 	    return 'hello';
+// 	}
+
+// 	var a = {}, b={key:'b'},c={key:'c'};
+
+// 	a[b] = '123';
+// 	a[c] = '456';
+	
+// 	// console.log(Object.keys(a));
+	
+
+// 	var obj = {};
+// 	var initValue = 'hello';
+
+// 	Object.defineProperty(obj,'newKey',{
+// 		get:function(){
+// 			return initValue;
+// 		},
+// 		set:function(value){
+// 			console.log(value);
+// 			initValue = value
+// 		}
+// 	})
+
+
+//节流
+// var flag = true;
+// window.onscroll = function(){
+// 	var timer = null;
+// 	if(!flag){
+// 		return
+// 	}
+// 	flag = false;
+// 	timer = setTimeout(function(){
+// 		console.log('sssss');
+// 		flag = true;
+// 	},1000)
+// }
+
+
+// //防抖
+// var fangdou = document.getElementById('fangdou');
+
+// function doudou(){
+// 	var timer = null;
+// 	return function(){
+// 		if(timer){
+// 			clearTimeout(timer);
+// 		}
+// 		timer = setTimeout(function(){
+// 			console.log('ssss')
+// 		},1000)
+// 	}
+// }
+// fangdou.onkeyup = doudou();
+
+		
+	</script>
+	}
+	}
+</body>
+</html>

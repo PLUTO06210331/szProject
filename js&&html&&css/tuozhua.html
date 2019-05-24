@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>tuozhua</title>
+</head>
+<style>
+	#drag{
+		width: 200px;
+		height: 200px;
+		background: red;
+		color: #fff;
+		text-align: center;
+		line-height: 200px;
+		position: absolute;
+		top: 40px;
+		left: 40px;
+		border: 1px dotted green;
+		cursor:move;
+	}
+</style>
+<body>
+	<div id="drag">拖动我把</div>
+	<script>
+		var drag = document.getElementById("drag");
+		drag.onmousedown = function(ev){
+			// console.log(ev.target);
+			console.log(ev.clientX)
+			console.log(drag.offsetLeft);
+			ev = ev || event;
+			var a = drag.offsetLeft;
+			var b = drag.offsetTop;
+			var c = ev.clientX-a;     //鼠标在div中的相对位置
+			var d = ev.clientY-b;
+			drag.onmousemove = function(e){
+				e = e || event;
+				drag.style.left = e.clientX - c +"px";
+				drag.style.top = e.clientY - d +"px";
+			}
+		}
+		document.onmouseup =function(){
+            drag.onmousemove =function(){
+                null;
+            }
+        }
+	</script>
+</body>
+</html>
