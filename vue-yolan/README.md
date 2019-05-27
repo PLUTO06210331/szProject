@@ -1,1 +1,1 @@
-![avatar](./b.jpg)
+![avatar](./b.png)
