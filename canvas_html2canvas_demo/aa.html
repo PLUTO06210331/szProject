@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CanvasDraw</title>
+</head>
+<style>
+	*{
+		margin:0px;
+		padding: 0px;
+	}
+</style>
+<body>
+	<canvas
+		id="canvas"
+	    width="800"
+	    height="400"
+	    style='border:1px solid red'
+	    ontouchstart="canvasDown(event)"
+	    ontouchmove="canvasMove(event)"
+	    ontouchend="canvasUp(event)"
+	    ontouchleave="canvasLeave(event)"
+	></canvas>
+	<img id="img" src="" alt="">
+	<button id="clear" onclick="clear()">clear</button>
+    <button onclick="submit()">submit</button>
+	<script>
+		//初始化
+		var canvas = document.getElementById("canvas");
+		var clear = document.getElementById("clear");
+		var flag = false;
+		var ctx = canvas.getContext("2d");
+		ctx.lineWidth = 5;
+		ctx.lineCap = 'round';
+		ctx.lineJoin = 'round';
+		ctx.shadowBlur = 1;
+		ctx.shadowColor = '#000';
+		ctx.fillStyle = 'rgba(255, 255, 255, 0)';
+		// var width = canvas.width;
+		// var height = canvas.height;
+		// if(window.devicePixelRatio){
+		// 	canvas.style.width = width + 'px';
+		// 	canvas.style.height = height + 'px';
+		// 	canvas.height = height * window.devicePixelRatio;
+		// 	canvas.width = width * window.devicePixelRatio;
+		// 	ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
+		// }else{
+		// 	canvas.style.width = width + 'px';
+		// 	canvas.style.height = height + 'px';
+		// 	canvas.height = height * 4;
+		// 	canvas.width = width * 4;
+		// 	ctx.scale(4,4);			
+		// }
+		function canvasDown(e){
+			event.preventDefault();
+			flag = true
+			var canvasX = e.changedTouches[0].pageX - e.target.offsetLeft;
+			var canvasY = e.changedTouches[0].pageY - e.target.offsetLeft;
+			ctx.beginPath();
+			ctx.moveTo(canvasX,canvasY);
+		}
+
+		function canvasMove(e){
+			event.preventDefault();
+			if(flag){
+				var t = e.target;
+		        var canvasX;
+		        var canvasY;
+		        canvasX = e.changedTouches[0].pageX - t.offsetLeft;
+		        canvasY = e.changedTouches[0].pageY - t.offsetTop;
+		        ctx.lineTo(canvasX, canvasY);
+		        ctx.stroke();
+			}
+		}	
+
+		function canvasUp(e){
+			event.preventDefault();
+			flag = false;
+		}
+
+		function canvasLeave(e){
+			event.preventDefault();
+			flag = false;
+		}
+
+      	clear.addEventListener("click",function(){
+        	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+      	})
+
+      	function submit(){
+      		var blank = document.createElement('canvas');
+      		var img = document.getElementById('img');
+      		blank.width = canvas.width;
+    		blank.height = canvas.height;
+        	var dataURL = canvas.toDataURL("image/png");
+        	if(dataURL === blank.toDataURL()){
+        		alert('请填写名称!');
+        		return;
+        	}
+        	console.log(dataURL)
+        		// img.setAttribute("src",dataURL);
+      	}
+
+	</script>
+</body>
+</html>

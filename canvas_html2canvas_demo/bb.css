@@ -1,0 +1,131 @@
+*{
+		margin:0px;
+		padding: 0px;
+	}
+	.wrap{
+		position: relative;
+	}
+	#img{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+	#imgCanvas{
+		/*border:1px solid red;*/
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+	#divImg{
+		display: none;
+		position: relative;
+		/*margin-right: 20px;*/
+	}
+	#newspan{
+		position: absolute;
+		top: 180px;
+		right: 0px;
+		z-index: 1;
+		width: 100px;
+	}
+	button{
+		width: 80px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+	}
+	.kType{
+		position: absolute;
+		top: 106px;
+    	left: 82px;
+    	z-index: 2;
+	}
+	.kPerson{
+		position: absolute;
+		z-index: 2;
+		top: 148px;
+    	left: 82px;
+	}
+	.sPrice{
+		position: absolute;
+		z-index: 2;
+		top: 190px;
+    	left: 82px;
+	}
+	.spType{
+		position: absolute;
+		z-index: 2;
+		top: 190px;
+    	left: 476px;
+	}
+	.rmbBig{
+		position: absolute;
+		z-index: 2;
+		top: 231px;
+    	left: 132px;
+	}
+	.rmbSmall{
+		position: absolute;
+		z-index: 2;
+		top: 231px;
+    	left: 476px;
+	}
+	.smart{
+		position: absolute;
+		z-index: 2;
+		bottom: 54px;
+    	left: 82px;
+	}
+	.sCom{
+		position: absolute;
+		z-index: 2;
+		bottom: 4px;
+    	left: 132px;
+	}
+	.scPreson{
+		position: absolute;
+		z-index: 2;
+		bottom: 4px;
+    	left: 327px;
+	}
+	.getPerson{
+		position: absolute;
+		z-index: 2;
+		bottom: 4px;
+    	right: 100px;
+	}
+	.No{
+		position: absolute;
+		z-index: 2;
+		top: 15px;
+    	right: 57px;
+	}
+	.year{
+		position: absolute;
+		z-index: 2;
+		top: 52px;
+    	right: 142px;
+	}
+	.mouth{
+		position: absolute;
+		z-index: 2;
+		top: 52px;
+    	right: 104px;
+	}
+	.day{
+		position: absolute;
+		z-index: 2;
+		top: 52px;
+    	right: 63px;
+	}
+	#canvas{
+		border:1px solid green;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+	}
+	.buttonGroup{
+		 position: absolute;
+		 right: 0px;
+		 top:320px
+	}

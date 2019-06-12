@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+</head>
+<link rel="stylesheet" href="bb.css">
+<body>
+	<div class="wrap">
+		<div>
+			<div id="divImg">
+				<img id="aa" src=""> <!--生成的图片 -->
+				<img id="newspan" src=""> <!--签名 -->
+				
+				<span class="No">20190612</span> <!--数据 -->
+				<span class="year">2019</span>
+				<span class="mouth">6</span>
+				<span class="day">12</span>
+				<span class="kType">Haier</span>
+				<span class="kPerson">Haier</span>
+				<span class="sPrice">1000000</span>
+				<span class="spType">1000000</span>
+				<span class="rmbBig">一百万</span>
+				<span class="rmbSmall">1000000</span>
+				<span class="smart">Haier</span>
+				<span class="sCom">Haier</span>
+				<span class="scPreson">Haier</span>
+				<span class="getPerson">Haier</span>
+			</div>
+			<img id="img" src="shouju.png" alt="">
+		</div>
+		<!--截取用的canvas -->
+		<canvas id="imgCanvas"></canvas>
+		<!--签名 -->
+		<canvas 
+			id="canvas" 
+			width="300" 
+			height="300" 
+		    onmousedown="canvasDown(event)"
+		    onmousemove="canvasMove(event)"
+		    onmouseup="canvasUp(event)"
+		    onmouseleave="canvasLeave(event)">
+		</canvas>
+		<!--按钮组 -->
+		<p class="buttonGroup">
+			<button onclick="getCeil()">截取</button>
+			<button id="clear" onclick="clear()">清除</button>
+	    	<button onclick="submit()">生成图片</button>
+	    	<button onclick="submit1()">保存图片</button>
+		</p>
+	</div>
+	<script src="html2canvas.js"></script>
+	<script src="html2canvas.min.js"></script>
+	<script>
+
+		//截取图片
+		function getCeil(){
+			var getImg = document.getElementById('img').getAttribute('src');
+			var images = document.getElementById('img');
+			var getCanvas = document.getElementById('imgCanvas');
+			document.getElementById('divImg').style.display = 'block';
+			var ctx = getCanvas.getContext("2d");
+			// console.log(images.offsetTop +'--'+images.offsetLeft)
+			//获取图片大小
+			var imgWidth;
+			var imgHeight;
+			var image = new Image();
+			image.setAttribute("crossOrigin", 'Anonymous');
+			image.onload = function(){
+				imgWidth = image.width;
+				imgHeight = image.height;
+				//设置cabvas大小
+				getCanvas.width = imgWidth;
+				getCanvas.height = imgHeight;
+				ctx.drawImage(image, 0, 0);
+				var dataURL = getCanvas.toDataURL("image/png");
+				console.log(dataURL)
+	          	document.getElementById('aa').setAttribute('src',dataURL);
+			}
+			image.src = getImg;
+			//修改Canvas位置
+			getCanvas.style.top = images.offsetTop + 'px';
+			getCanvas.style.left = images.offsetLeft + 'px';
+			document.getElementById('divImg').style.top = images.offsetTop + 'px';
+			document.getElementById('divImg').style.left = images.offsetLeft + 'px';
+		}
+
+		//电子签名
+		var canvas = document.getElementById("canvas");
+		var clear = document.getElementById("clear");
+		var flag = false;
+		var ctx = canvas.getContext("2d");
+		ctx.lineWidth = 3;
+		ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowBlur = 1;
+        ctx.shadowColor = 'black';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0)';
+
+		function canvasDown(e){
+			flag = true
+			var canvasX = e.clientX - e.target.offsetLeft;
+			var canvasY = e.clientY - e.target.offsetTop + document.documentElement.scrollTop;
+			ctx.beginPath();
+			ctx.moveTo(canvasX,canvasY);
+		}
+
+		function canvasMove(e){
+			if(flag){
+				var t = e.target;
+		        var canvasX;
+		        var canvasY;
+		        canvasX = e.clientX - t.offsetLeft;
+		        canvasY = e.clientY - t.offsetTop + document.documentElement.scrollTop;
+		        ctx.lineTo(canvasX, canvasY);
+		        ctx.stroke();
+			}
+		}	
+
+		function canvasUp(e){
+			flag = false;
+		}
+
+		function canvasLeave(e){
+			flag = false;
+		}
+
+		clear.addEventListener("click",function(){
+        	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+      	})
+
+      	function submit(){
+          var dataURL = canvas.toDataURL("image/png");
+          document.getElementById('newspan').setAttribute('src',dataURL);
+      	}
+
+      	//引用html2canvas 把指定的div变成图片并下载到本地
+      	function submit1(){
+      		html2canvas(document.querySelector("#divImg"),{
+      			windowHeight: document.body.scrollHeight,
+      			y: window.pageYoffset
+      		}).then(canvas => {
+		   		 var imgUri = canvas.toDataURL("image/png");
+		   		 var saveLink = document.createElement('a');
+                saveLink.href = imgUri;
+                saveLink.download = 'downLoad.png';
+                saveLink.click();
+			});
+      	}
+
+	</script>
+</body>
+</html>
